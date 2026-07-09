@@ -21,6 +21,11 @@ class UserController extends Controller
         return view('admin.users.create');
     }
 
+    public function createAdmin()
+    {
+        return view('admin.users.create-admin');
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -38,6 +43,24 @@ class UserController extends Controller
         ]);
 
         return redirect()->route('admin.users.index')->with('success', 'User created successfully.');
+    }
+
+    public function storeAdmin(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'unique:users,email'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+
+        User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'role' => 'admin',
+            'password' => Hash::make($validated['password']),
+        ]);
+
+        return redirect()->route('admin.users.index')->with('success', 'Admin created successfully.');
     }
 
     public function edit(User $user)
