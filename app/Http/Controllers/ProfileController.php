@@ -33,6 +33,9 @@ class ProfileController extends Controller
         }
 
         $request->user()->save();
+        $request->user()->forceFill([
+            'profile_completed_at' => now(),
+        ])->saveQuietly();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
