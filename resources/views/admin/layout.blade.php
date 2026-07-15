@@ -4,59 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Admin Panel') - EnglishPath</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 0; background: #f7f7fb; color: #1f2937; }
-        header { background: #111827; color: white; padding: 16px 24px; }
-        nav a { color: white; margin-right: 12px; text-decoration: none; }
-        main { padding: 24px; }
-        .card { background: white; border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 8px 24px rgba(0,0,0,.06); }
-        table { width: 100%; border-collapse: collapse; background: white; }
-        th, td { border: 1px solid #e5e7eb; padding: 10px; text-align: left; }
-        th { background: #f3f4f6; }
-        .btn { display: inline-block; padding: 8px 12px; border-radius: 8px; text-decoration: none; border: none; cursor: pointer; }
-        .btn-primary { background: #2563eb; color: white; }
-        .btn-danger { background: #dc2626; color: white; }
-        .btn-secondary { background: #6b7280; color: white; }
-        .mb-2 { margin-bottom: 8px; }
-        .mb-3 { margin-bottom: 12px; }
-        .mb-4 { margin-bottom: 16px; }
-        .text-success { color: #15803d; }
-        .text-danger { color: #b91c1c; }
-        input, textarea, select { width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 8px; box-sizing: border-box; }
-        label { display: block; font-weight: bold; margin-bottom: 6px; }
-    </style>
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body>
-<header>
-    <nav>
-        <a href="{{ route('admin.dashboard') }}">Dashboard</a>
-        <a href="{{ route('admin.courses.index') }}">Courses</a>
-        <a href="{{ route('admin.lessons.index') }}">Lessons</a>
-        <a href="{{ route('admin.vocabularies.index') }}">Vocabulary</a>
-        <a href="{{ route('admin.quizzes.index') }}">Quizzes</a>
-        <a href="{{ route('admin.readings.index') }}">Reading</a>
-        <a href="{{ route('admin.users.index') }}">Users</a>
-        <form method="POST" action="{{ route('logout') }}" style="display:inline; margin-left: 12px;">
-            @csrf
-            <button type="submit" class="btn btn-secondary" style="padding: 0; background: transparent; color: white; font: inherit;">Logout</button>
-        </form>
-    </nav>
-</header>
-<main>
-    @if (session('success'))
-        <div class="card text-success">{{ session('success') }}</div>
-    @endif
-    @if ($errors->any())
-        <div class="card text-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+<body class="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(14,165,233,0.12),_transparent_30%),linear-gradient(135deg,_#f8fbff_0%,_#eef2ff_100%)] font-sans text-slate-800">
+    <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        <header class="rounded-[1.75rem] border border-slate-200/70 bg-slate-950 px-6 py-5 text-white shadow-[0_25px_60px_rgba(15,23,42,0.16)]">
+            <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                <div>
+                    <p class="text-sm font-semibold uppercase tracking-[0.3em] text-sky-300">EnglishPath Admin</p>
+                    <h1 class="mt-2 text-2xl font-semibold">Manage your learning platform with clarity</h1>
+                </div>
+                <nav class="flex flex-wrap gap-2 text-sm">
+                    <a href="{{ route('admin.dashboard') }}" class="rounded-full px-3 py-2 transition {{ request()->routeIs('admin.dashboard') ? 'bg-sky-500 text-white' : 'bg-white/10 text-slate-200 hover:bg-white/20' }}">Dashboard</a>
+                    <a href="{{ route('admin.courses.index') }}" class="rounded-full px-3 py-2 transition {{ request()->routeIs('admin.courses.*') ? 'bg-sky-500 text-white' : 'bg-white/10 text-slate-200 hover:bg-white/20' }}">Courses</a>
+                    <a href="{{ route('admin.lessons.index') }}" class="rounded-full px-3 py-2 transition {{ request()->routeIs('admin.lessons.*') ? 'bg-sky-500 text-white' : 'bg-white/10 text-slate-200 hover:bg-white/20' }}">Lessons</a>
+                    <a href="{{ route('admin.vocabularies.index') }}" class="rounded-full px-3 py-2 transition {{ request()->routeIs('admin.vocabularies.*') ? 'bg-sky-500 text-white' : 'bg-white/10 text-slate-200 hover:bg-white/20' }}">Vocabulary</a>
+                    <a href="{{ route('admin.quizzes.index') }}" class="rounded-full px-3 py-2 transition {{ request()->routeIs('admin.quizzes.*') ? 'bg-sky-500 text-white' : 'bg-white/10 text-slate-200 hover:bg-white/20' }}">Quizzes</a>
+                    <a href="{{ route('admin.readings.index') }}" class="rounded-full px-3 py-2 transition {{ request()->routeIs('admin.readings.*') ? 'bg-sky-500 text-white' : 'bg-white/10 text-slate-200 hover:bg-white/20' }}">Reading</a>
+                    <a href="{{ route('admin.users.index') }}" class="rounded-full px-3 py-2 transition {{ request()->routeIs('admin.users.*') ? 'bg-sky-500 text-white' : 'bg-white/10 text-slate-200 hover:bg-white/20' }}">Users</a>
+                    <form method="POST" action="{{ route('logout') }}" class="inline-flex">
+                        @csrf
+                        <button type="submit" class="rounded-full bg-white/10 px-3 py-2 text-slate-200 transition hover:bg-white/20">Logout</button>
+                    </form>
+                </nav>
+            </div>
+        </header>
 
-    @yield('content')
-</main>
+        <main class="mt-6 rounded-[2rem] border border-slate-200/70 bg-white/85 p-4 shadow-[0_20px_45px_rgba(15,23,42,0.08)] backdrop-blur sm:p-6 lg:p-8">
+            @if (session('success'))
+                <div class="mb-6 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
+                    {{ session('success') }}
+                </div>
+            @endif
+            @if ($errors->any())
+                <div class="mb-6 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
+                    <ul class="list-disc space-y-1 pl-5">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            @yield('content')
+        </main>
+    </div>
 </body>
 </html>
