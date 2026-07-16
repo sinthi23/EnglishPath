@@ -3,50 +3,79 @@
 @section('title', 'Create Lesson')
 
 @section('content')
+<div class="space-y-6 max-w-4xl mx-auto">
+    <!-- Header with Back Action -->
+    <div class="flex items-center justify-between border-b border-slate-100 pb-4 dark:border-slate-800">
+        <div>
+            <h2 class="text-xl font-extrabold tracking-tight text-slate-950 dark:text-white">Create Lesson Module</h2>
+            <p class="mt-1 text-xs text-slate-500 font-medium">Define study text, difficulties, and external video lectures.</p>
+        </div>
+        <a class="btn btn-secondary px-4 py-2 text-xs" href="{{ route('admin.lessons.index') }}">
+            Back to Catalog
+        </a>
+    </div>
+
+    <!-- Form card -->
     <div class="card">
-        <form method="POST" action="{{ route('admin.lessons.store') }}">
+        <form method="POST" action="{{ route('admin.lessons.store') }}" class="space-y-5">
             @csrf
-            <div class="mb-3">
-                <label>Course</label>
-                <select name="course_id">
-                    <option value="">No course</option>
-                    @foreach ($courses as $course)
-                        <option value="{{ $course->id }}">{{ $course->title }}</option>
-                    @endforeach
-                </select>
+
+            <div class="grid gap-5 sm:grid-cols-2">
+                <div>
+                    <label for="course_id">Target Course Selection</label>
+                    <select id="course_id" name="course_id">
+                        <option value="">No Course Associated</option>
+                        @foreach ($courses as $course)
+                            <option value="{{ $course->id }}">{{ $course->title }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div>
+                    <label for="title">Lesson Module Title</label>
+                    <input type="text" id="title" name="title" value="{{ old('title') }}" placeholder="e.g. Introduction to Syntax structure" required autofocus>
+                </div>
             </div>
-            <div class="mb-3">
-                <label>Title</label>
-                <input type="text" name="title" value="{{ old('title') }}">
+
+            <div class="grid gap-5 sm:grid-cols-3">
+                <div>
+                    <label for="level">Lesson Level</label>
+                    <select id="level" name="level">
+                        <option value="beginner">Beginner</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="advanced">Advanced</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="difficulty">Relative Difficulty</label>
+                    <select id="difficulty" name="difficulty">
+                        <option value="beginner">Beginner</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="advanced">Advanced</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="video_url">Video Lecture URL (YouTube, Vimeo...)</label>
+                    <input type="text" id="video_url" name="video_url" value="{{ old('video_url') }}" placeholder="e.g. https://www.youtube.com/watch?v=...">
+                </div>
             </div>
-            <div class="mb-3">
-                <label>Level</label>
-                <select name="level">
-                    <option value="beginner">Beginner</option>
-                    <option value="intermediate">Intermediate</option>
-                    <option value="advanced">Advanced</option>
-                </select>
+
+            <div>
+                <label for="content">Lesson Slide Content (Markdown or Plaintext)</label>
+                <textarea id="content" name="content" rows="12" placeholder="Write comprehensive study material for students..." required>{{ old('content') }}</textarea>
             </div>
-            <div class="mb-3">
-                <label>Difficulty</label>
-                <select name="difficulty">
-                    <option value="beginner">Beginner</option>
-                    <option value="intermediate">Intermediate</option>
-                    <option value="advanced">Advanced</option>
-                </select>
+
+            <div class="flex items-center">
+                <label class="inline-flex items-center cursor-pointer">
+                    <input type="checkbox" name="is_published" value="1" class="h-4.5 w-4.5" checked>
+                    <span class="ml-2.5 text-sm font-semibold text-slate-700 dark:text-slate-300">Publish Immediately</span>
+                </label>
             </div>
-            <div class="mb-3">
-                <label>Video URL</label>
-                <input type="text" name="video_url" value="{{ old('video_url') }}">
+
+            <div class="pt-4 border-t border-slate-50 dark:border-slate-850 flex items-center justify-end gap-2.5">
+                <a class="btn btn-secondary" href="{{ route('admin.lessons.index') }}">Cancel</a>
+                <button class="btn btn-primary" type="submit">Save Lesson</button>
             </div>
-            <div class="mb-3">
-                <label>Content</label>
-                <textarea name="content" rows="8">{{ old('content') }}</textarea>
-            </div>
-            <div class="mb-3">
-                <label><input type="checkbox" name="is_published" value="1" checked> Published</label>
-            </div>
-            <button class="btn btn-primary" type="submit">Save</button>
         </form>
     </div>
+</div>
 @endsection
