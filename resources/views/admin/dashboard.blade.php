@@ -16,10 +16,10 @@
 
 <div class="space-y-8">
     <!-- Welcome card banner -->
-    <div class="rounded-[2rem] border border-slate-100 bg-white p-6.5 shadow-sm dark:bg-slate-900 dark:border-slate-800/60">
+    <div class="rounded-[2rem] border border-slate-100 bg-white p-6 shadow-sm dark:bg-slate-900 dark:border-slate-800/60">
         <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div>
-                <p class="text-xs font-bold uppercase tracking-[0.25em] text-indigo-650 dark:text-indigo-400">Admin Dashboard</p>
+                <p class="text-xs font-bold uppercase tracking-[0.25em] text-indigo-600 dark:text-indigo-400">Admin Dashboard</p>
                 <h1 class="mt-2 text-2xl font-extrabold text-slate-950 dark:text-white tracking-tight">System Statistics Overview</h1>
                 <p class="mt-2 text-sm leading-6 text-slate-500 dark:text-slate-400">Manage courses, lessons, quizzes, reading materials, vocabulary, and user authorization levels.</p>
             </div>
@@ -35,67 +35,67 @@
     <!-- Statistics Grid -->
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <!-- Courses Widget -->
-        <div class="card flex flex-col justify-between transition hover:-translate-y-0.5 hover:shadow-md">
+        <div class="card flex flex-col justify-between transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-[0_20px_40px_rgba(99,102,241,0.04)] dark:hover:shadow-[0_20px_40px_rgba(99,102,241,0.12)] hover:border-indigo-200/80 dark:hover:border-indigo-500/30">
             <div>
                 <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Courses</p>
                 <p class="mt-3 text-4xl font-extrabold text-slate-900 dark:text-white">{{ $coursesCount }}</p>
             </div>
             <div class="mt-4 pt-3.5 border-t border-slate-50 dark:border-slate-800 flex items-center justify-between">
                 <span class="text-xs text-slate-400">Manage course catalogs</span>
-                <a href="{{ route('admin.courses.index') }}" class="text-xs font-bold text-indigo-650 hover:underline dark:text-indigo-455">View courses →</a>
+                <a href="{{ route('admin.courses.index') }}" class="text-xs font-bold text-indigo-600 hover:underline dark:text-indigo-400">View courses →</a>
             </div>
         </div>
 
         <!-- Lessons Widget -->
-        <div class="card flex flex-col justify-between transition hover:-translate-y-0.5 hover:shadow-md">
+        <div class="card flex flex-col justify-between transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-[0_20px_40px_rgba(99,102,241,0.04)] dark:hover:shadow-[0_20px_40px_rgba(99,102,241,0.12)] hover:border-indigo-200/80 dark:hover:border-indigo-500/30">
             <div>
                 <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Lessons Catalog</p>
                 <p class="mt-3 text-4xl font-extrabold text-slate-900 dark:text-white">{{ $lessonsCount }}</p>
             </div>
             <div class="mt-4 pt-3.5 border-t border-slate-50 dark:border-slate-800 flex items-center justify-between">
                 <span class="text-xs text-slate-400">Active study sheets</span>
-                <a href="{{ route('admin.lessons.index') }}" class="text-xs font-bold text-indigo-650 hover:underline dark:text-indigo-455">View lessons →</a>
+                <a href="{{ route('admin.lessons.index') }}" class="text-xs font-bold text-indigo-600 hover:underline dark:text-indigo-400">View lessons →</a>
             </div>
         </div>
 
         <!-- Vocabulary Widget -->
-        <div class="card flex flex-col justify-between transition hover:-translate-y-0.5 hover:shadow-md">
+        <div class="card flex flex-col justify-between transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-[0_20px_40px_rgba(99,102,241,0.04)] dark:hover:shadow-[0_20px_40px_rgba(99,102,241,0.12)] hover:border-indigo-200/80 dark:hover:border-indigo-500/30">
             <div>
                 <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Vocabulary Items</p>
                 <p class="mt-3 text-4xl font-extrabold text-slate-900 dark:text-white">{{ $vocabCount }}</p>
             </div>
             <div class="mt-4 pt-3.5 border-t border-slate-50 dark:border-slate-800 flex items-center justify-between">
                 <span class="text-xs text-slate-400">Saved definition words</span>
-                <a href="{{ route('admin.vocabularies.index') }}" class="text-xs font-bold text-indigo-650 hover:underline dark:text-indigo-455">View vocabulary →</a>
+                <a href="{{ route('admin.vocabularies.index') }}" class="text-xs font-bold text-indigo-600 hover:underline dark:text-indigo-400">View vocabulary →</a>
             </div>
         </div>
 
         <!-- Quizzes Widget -->
-        <div class="card flex flex-col justify-between transition hover:-translate-y-0.5 hover:shadow-md">
+        <div class="card flex flex-col justify-between transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-[0_20px_40px_rgba(99,102,241,0.04)] dark:hover:shadow-[0_20px_40px_rgba(99,102,241,0.12)] hover:border-indigo-200/80 dark:hover:border-indigo-500/30">
             <div>
                 <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Interactive Quizzes</p>
                 <p class="mt-3 text-4xl font-extrabold text-slate-900 dark:text-white">{{ $quizzesCount }}</p>
             </div>
             <div class="mt-4 pt-3.5 border-t border-slate-50 dark:border-slate-800 flex items-center justify-between">
                 <span class="text-xs text-slate-400">Evaluation questionnaires</span>
-                <a href="{{ route('admin.quizzes.index') }}" class="text-xs font-bold text-indigo-650 hover:underline dark:text-indigo-455">View quizzes →</a>
+                <a href="{{ route('admin.quizzes.index') }}" class="text-xs font-bold text-indigo-600 hover:underline dark:text-indigo-400">View quizzes →</a>
             </div>
         </div>
 
         <!-- Reading Passages Widget -->
-        <div class="card flex flex-col justify-between transition hover:-translate-y-0.5 hover:shadow-md">
+        <div class="card flex flex-col justify-between transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-[0_20px_40px_rgba(99,102,241,0.04)] dark:hover:shadow-[0_20px_40px_rgba(99,102,241,0.12)] hover:border-indigo-200/80 dark:hover:border-indigo-500/30">
             <div>
                 <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Reading Passages</p>
                 <p class="mt-3 text-4xl font-extrabold text-slate-900 dark:text-white">{{ $readingsCount }}</p>
             </div>
             <div class="mt-4 pt-3.5 border-t border-slate-50 dark:border-slate-800 flex items-center justify-between">
                 <span class="text-xs text-slate-400">Comprehension articles</span>
-                <a href="{{ route('admin.readings.index') }}" class="text-xs font-bold text-indigo-650 hover:underline dark:text-indigo-455">View reading →</a>
+                <a href="{{ route('admin.readings.index') }}" class="text-xs font-bold text-indigo-600 hover:underline dark:text-indigo-400">View reading →</a>
             </div>
         </div>
 
         <!-- User Accounts Widget -->
-        <div class="card flex flex-col justify-between transition hover:-translate-y-0.5 hover:shadow-md">
+        <div class="card flex flex-col justify-between transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-[0_20px_40px_rgba(99,102,241,0.04)] dark:hover:shadow-[0_20px_40px_rgba(99,102,241,0.12)] hover:border-indigo-200/80 dark:hover:border-indigo-500/30">
             <div>
                 <p class="text-xs font-bold uppercase tracking-wider text-slate-400">User Accounts</p>
                 <p class="mt-3 text-4.5xl font-extrabold text-slate-900 dark:text-white">
@@ -107,7 +107,7 @@
             </div>
             <div class="mt-4 pt-3.5 border-t border-slate-50 dark:border-slate-800 flex items-center justify-between">
                 <span class="text-xs text-slate-400">Registered users log</span>
-                <a href="{{ route('admin.users.index') }}" class="text-xs font-bold text-indigo-650 hover:underline dark:text-indigo-455">View users →</a>
+                <a href="{{ route('admin.users.index') }}" class="text-xs font-bold text-indigo-600 hover:underline dark:text-indigo-400">View users →</a>
             </div>
         </div>
     </div>

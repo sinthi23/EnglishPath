@@ -5,10 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Admin Panel') - EnglishPath</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.bunny.net/css?family=plus-jakarta-sans:400,500,600,700,800&display=swap" rel="stylesheet" />
+    
+    <!-- Theme Initialization script to prevent flash -->
+    <script>
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="relative isolate min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(14,165,233,0.12),_transparent_30%),linear-gradient(135deg,_#f8fbff_0%,_#eef2ff_100%)] font-sans text-slate-800 antialiased pb-12 overflow-x-hidden">
+<body class="relative isolate min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(14,165,233,0.12),_transparent_30%),linear-gradient(135deg,_#f8fbff_0%,_#eef2ff_100%)] dark:bg-gradient-to-br dark:from-slate-950 dark:via-slate-950 dark:to-indigo-950/40 font-sans text-slate-800 dark:text-slate-200 antialiased pb-12 overflow-x-hidden">
     <!-- Premium background pattern overlays -->
     <div class="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
         <div class="absolute -left-20 top-40 h-[36rem] w-[36rem] rounded-full bg-sky-400/8 blur-3xl animate-pulse" style="animation-duration: 9s;"></div>
@@ -42,7 +52,7 @@
             </div>
         </header>
 
-        <main class="mt-6 rounded-[2.25rem] border border-slate-200/50 bg-white/75 p-5 shadow-[0_25px_60px_rgba(15,23,42,0.05)] backdrop-blur-md sm:p-8 lg:p-10">
+        <main class="mt-6 rounded-[2.25rem] border border-slate-200/50 bg-white/75 p-5 shadow-[0_25px_60px_rgba(15,23,42,0.05)] backdrop-blur-md dark:border-slate-800/60 dark:bg-slate-900/75 sm:p-8 lg:p-10">
             @if (session('success'))
                 <div class="mb-6 flex items-center gap-3.5 rounded-2xl border border-emerald-500/10 bg-emerald-500/5 px-4 py-3 text-sm text-emerald-800">
                     <svg class="h-5 w-5 flex-shrink-0 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
