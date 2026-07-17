@@ -10,13 +10,11 @@ use Exception;
 
 class DictionaryController extends Controller
 {
-    // Shows the dictionary search page
     public function index()
     {
         return view('student.dictionary');
     }
 
-    // JSON API endpoint - called by AJAX/fetch
     public function lookup(Request $request, $word)
     {
         if (!$word) {
@@ -56,7 +54,6 @@ class DictionaryController extends Controller
         }
     }
 
-    // Saves the looked-up word into your existing vocabularies table and bookmarks it
     public function save(Request $request)
     {
         $request->validate([
@@ -68,7 +65,6 @@ class DictionaryController extends Controller
 
         $user = $request->user();
 
-        // Check if word exists globally
         $vocabulary = Vocabulary::where('word', $request->word)->first();
         if (!$vocabulary) {
             $vocabulary = Vocabulary::create([
@@ -80,7 +76,6 @@ class DictionaryController extends Controller
             ]);
         }
 
-        // Create user bookmark for this vocabulary
         \App\Models\Bookmark::firstOrCreate([
             'user_id' => $user->id,
             'vocabulary_id' => $vocabulary->id,

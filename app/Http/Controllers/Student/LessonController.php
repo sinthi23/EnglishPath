@@ -13,6 +13,7 @@ class LessonController extends Controller
     {
         $lessons = Lesson::query()
             ->where('is_published', true)
+            ->whereNull('course_id')
             ->orderBy('id')
             ->get();
 

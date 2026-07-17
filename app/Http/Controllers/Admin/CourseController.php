@@ -22,11 +22,19 @@ class CourseController extends Controller
         return view('admin.courses.create');
     }
 
+    public function show(Course $course)
+    {
+        $lessons = $course->lessons()->orderBy('id')->get();
+
+        return view('admin.courses.show', compact('course', 'lessons'));
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
+            'price' => ['required', 'integer', 'min:0'],
             'level' => ['required', 'in:beginner,intermediate,advanced'],
             'is_published' => ['nullable', 'boolean'],
         ]);
@@ -41,6 +49,7 @@ class CourseController extends Controller
             'title' => $validated['title'],
             'slug' => $slug,
             'description' => $validated['description'] ?? null,
+            'price' => $validated['price'],
             'level' => $validated['level'],
             'is_published' => $request->boolean('is_published'),
         ]);
@@ -58,6 +67,7 @@ class CourseController extends Controller
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
+            'price' => ['required', 'integer', 'min:0'],
             'level' => ['required', 'in:beginner,intermediate,advanced'],
             'is_published' => ['nullable', 'boolean'],
         ]);
@@ -72,6 +82,7 @@ class CourseController extends Controller
             'title' => $validated['title'],
             'slug' => $slug,
             'description' => $validated['description'] ?? null,
+            'price' => $validated['price'],
             'level' => $validated['level'],
             'is_published' => $request->boolean('is_published'),
         ]);
