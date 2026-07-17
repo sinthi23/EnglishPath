@@ -83,15 +83,30 @@ class QuizController extends Controller
             'correct_answer' => ['required', 'in:A,B,C,D'],
         ]);
 
-        $quiz->questions()->create($validated);
+        $questionObj = $quiz->questions()->create($validated);
 
-        return redirect()->route('admin.quizzes.edit', $quiz)->with('success', 'Question added successfully.');
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Question added!',
+                'question' => $questionObj,
+            ]);
+        }
+
+        return redirect()->route('admin.quizzes.edit', $quiz)->with('success', 'Question added!');
     }
 
     public function destroyQuestion(Quiz $quiz, \App\Models\Question $question)
     {
         $question->delete();
 
-        return redirect()->route('admin.quizzes.edit', $quiz)->with('success', 'Question removed successfully.');
+        if (request()->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Question deleted!',
+            ]);
+        }
+
+        return redirect()->route('admin.quizzes.edit', $quiz)->with('success', 'Question deleted!');
     }
 }

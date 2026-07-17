@@ -14,13 +14,17 @@ class BookmarkController extends Controller
     {
         $user = $request->user();
 
-        $bookmarkedLessons = Lesson::whereHas('bookmarks', function ($query) use ($user) {
-            $query->where('user_id', $user->id);
-        })->get();
+        $bookmarkedLessons = Lesson::query()
+            ->join('bookmarks', 'lessons.id', '=', 'bookmarks.lesson_id')
+            ->where('bookmarks.user_id', $user->id)
+            ->select('lessons.*')
+            ->get();
 
-        $bookmarkedVocabs = Vocabulary::whereHas('bookmarks', function ($query) use ($user) {
-            $query->where('user_id', $user->id);
-        })->get();
+        $bookmarkedVocabs = Vocabulary::query()
+            ->join('bookmarks', 'vocabularies.id', '=', 'bookmarks.vocabulary_id')
+            ->where('bookmarks.user_id', $user->id)
+            ->select('vocabularies.*')
+            ->get();
 
         return view('student.bookmarks', compact('bookmarkedLessons', 'bookmarkedVocabs'));
     }
