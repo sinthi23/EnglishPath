@@ -14,4 +14,9 @@ class Vocabulary extends Model
         'antonym',
         'difficulty',
     ];
+
+    public function bookmarks()
+    {
+        return $this->hasMany(Bookmark::class);
+    }
 }

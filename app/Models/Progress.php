@@ -11,6 +11,7 @@ class Progress extends Model
     protected $fillable = [
         'user_id',
         'lesson_id',
+        'reading_passage_id',
         'completed',
         'score',
         'completed_at',
@@ -32,5 +33,10 @@ class Progress extends Model
     public function lesson()
     {
         return $this->belongsTo(Lesson::class);
+    }
+
+    public function readingPassage()
+    {
+        return $this->belongsTo(ReadingPassage::class);
     }
 }

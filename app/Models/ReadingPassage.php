@@ -20,4 +20,9 @@ class ReadingPassage extends Model
             'is_published' => 'boolean',
         ];
     }
+
+    public function quiz()
+    {
+        return $this->hasOne(Quiz::class);
+    }
 }

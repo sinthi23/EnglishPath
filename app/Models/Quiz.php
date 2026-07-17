@@ -24,4 +24,9 @@ class Quiz extends Model
     {
         return $this->belongsTo(ReadingPassage::class);
     }
+
+    public function questions()
+    {
+        return $this->hasMany(Question::class);
+    }
 }
