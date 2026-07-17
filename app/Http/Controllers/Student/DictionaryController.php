@@ -56,7 +56,7 @@ class DictionaryController extends Controller
         }
     }
 
-    // Saves the looked-up word into your existing vocabularies table
+    // Saves the looked-up word into your existing vocabularies table and bookmarks it
     public function save(Request $request)
     {
         $request->validate([
@@ -66,20 +66,26 @@ class DictionaryController extends Controller
             'synonym' => 'nullable|string',
         ]);
 
-        // Avoid duplicate entries for the same word
-        $existing = Vocabulary::where('word', $request->word)->first();
-        if ($existing) {
-            return response()->json(['message' => 'This word is already in the vocabulary list.']);
+        $user = $request->user();
+
+        // Check if word exists globally
+        $vocabulary = Vocabulary::where('word', $request->word)->first();
+        if (!$vocabulary) {
+            $vocabulary = Vocabulary::create([
+                'word' => $request->word,
+                'meaning' => $request->meaning,
+                'example' => $request->example,
+                'synonym' => $request->synonym,
+                'difficulty' => 'medium',
+            ]);
         }
 
-        Vocabulary::create([
-            'word' => $request->word,
-            'meaning' => $request->meaning,
-            'example' => $request->example,
-            'synonym' => $request->synonym,
-            'difficulty' => 'medium',
+        // Create user bookmark for this vocabulary
+        \App\Models\Bookmark::firstOrCreate([
+            'user_id' => $user->id,
+            'vocabulary_id' => $vocabulary->id,
         ]);
 
-        return response()->json(['message' => 'Saved to the vocabulary list!']);
+        return response()->json(['message' => 'Saved to your bookmarked vocabulary list!']);
     }
 }

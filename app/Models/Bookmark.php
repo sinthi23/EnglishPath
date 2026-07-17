@@ -9,6 +9,7 @@ class Bookmark extends Model
     protected $fillable = [
         'user_id',
         'lesson_id',
+        'vocabulary_id',
     ];
 
     public function user()
@@ -19,5 +20,10 @@ class Bookmark extends Model
     public function lesson()
     {
         return $this->belongsTo(Lesson::class);
+    }
+
+    public function vocabulary()
+    {
+        return $this->belongsTo(Vocabulary::class);
     }
 }

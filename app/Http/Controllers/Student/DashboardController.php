@@ -52,7 +52,7 @@ class DashboardController extends Controller
             : null;
 
         if (! $currentLesson) {
-            $currentLesson = $recentProgress?->lesson
+            $currentLesson = $recentQuiz?->lesson
                 ?? $publishedLessons->first();
         }
 

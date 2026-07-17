@@ -19,6 +19,24 @@ class LessonController extends Controller
         return view('student.lessons.index', compact('lessons'));
     }
 
+    public function grammar()
+    {
+        $lessons = Lesson::query()
+            ->where('is_published', true)
+            ->where(function ($query) {
+                $query->where('title', 'like', '%grammar%')
+                      ->orWhere('content', 'like', '%grammar%')
+                      ->orWhereHas('course', function ($q) {
+                          $q->where('title', 'like', '%grammar%')
+                            ->orWhere('description', 'like', '%grammar%');
+                      });
+            })
+            ->orderBy('id')
+            ->get();
+
+        return view('student.grammar', compact('lessons'));
+    }
+
     public function show(Request $request, Lesson $lesson)
     {
         abort_unless($lesson->is_published, 404);

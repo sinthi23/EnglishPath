@@ -71,4 +71,27 @@ class QuizController extends Controller
 
         return redirect()->route('admin.quizzes.index')->with('success', 'Quiz deleted successfully.');
     }
+
+    public function storeQuestion(Request $request, Quiz $quiz)
+    {
+        $validated = $request->validate([
+            'question' => ['required', 'string'],
+            'option_a' => ['required', 'string', 'max:255'],
+            'option_b' => ['required', 'string', 'max:255'],
+            'option_c' => ['required', 'string', 'max:255'],
+            'option_d' => ['required', 'string', 'max:255'],
+            'correct_answer' => ['required', 'in:A,B,C,D'],
+        ]);
+
+        $quiz->questions()->create($validated);
+
+        return redirect()->route('admin.quizzes.edit', $quiz)->with('success', 'Question added successfully.');
+    }
+
+    public function destroyQuestion(Quiz $quiz, \App\Models\Question $question)
+    {
+        $question->delete();
+
+        return redirect()->route('admin.quizzes.edit', $quiz)->with('success', 'Question removed successfully.');
+    }
 }
