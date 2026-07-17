@@ -40,7 +40,7 @@ class CompletedLessonMiddleware
 
         if (! $hasCompletedPreviousLesson) {
             return redirect()
-                ->route('student.lessons.index')
+                ->route('student.courses.show', $lesson->course_id)
                 ->with('error', 'Complete ' . $previousLesson->title . ' before opening ' . $lesson->title . '.');
         }
 

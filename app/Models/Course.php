@@ -10,6 +10,7 @@ class Course extends Model
         'title',
         'slug',
         'description',
+        'price',
         'level',
         'is_published',
     ];
