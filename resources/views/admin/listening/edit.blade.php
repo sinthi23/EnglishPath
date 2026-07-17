@@ -1,99 +1,90 @@
 @extends('admin.layout')
 
-@section('title', 'Edit Quiz')
+@section('title', 'Edit Listening Exercise')
 
 @section('content')
 <div class="space-y-6 max-w-4xl mx-auto">
-    <!-- Header with Back Action -->
     <div class="flex items-center justify-between border-b border-slate-100 pb-4 dark:border-slate-800">
         <div>
-            <h2 class="text-xl font-extrabold tracking-tight text-slate-950 dark:text-white">Edit Quiz</h2>
-            <p class="mt-1 text-xs text-slate-500 font-medium">Modify settings and target metrics for this quiz.</p>
+            <h2 class="text-xl font-extrabold tracking-tight text-slate-950 dark:text-white">Edit Listening Exercise</h2>
+            <p class="mt-1 text-xs text-slate-500 font-medium">Modify settings, replace audio source, or manage questions.</p>
         </div>
-        <a class="btn btn-secondary px-4 py-2 text-xs" href="{{ route('admin.quizzes.index') }}">
+        <a class="btn btn-secondary px-4 py-2 text-xs" href="{{ route('admin.listening-materials.index') }}">
             Back to Catalog
         </a>
     </div>
 
-    <!-- Form card -->
+    <!-- Form Card -->
     <div class="card">
-        <form method="POST" action="{{ route('admin.quizzes.update', $quiz) }}" class="space-y-5">
+        <form method="POST" action="{{ route('admin.listening-materials.update', $listeningMaterial) }}" enctype="multipart/form-data" class="space-y-5">
             @csrf
             @method('PUT')
 
-            <div class="grid gap-5 sm:grid-cols-2">
-                <div>
-                    <label for="lesson_id">Link Lesson (Optional)</label>
-                    <select id="lesson_id" name="lesson_id">
-                        <option value="">No Lesson Associated</option>
-                        @foreach ($lessons as $lesson)
-                            <option value="{{ $lesson->id }}" @selected(old('lesson_id', $quiz->lesson_id) == $lesson->id)>{{ $lesson->title }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                
-                <div>
-                    <label for="reading_passage_id">Link Reading Passage (Optional)</label>
-                    <select id="reading_passage_id" name="reading_passage_id">
-                        <option value="">No Passage Associated</option>
-                        @foreach ($readings as $reading)
-                            <option value="{{ $reading->id }}" @selected(old('reading_passage_id', $quiz->reading_passage_id) == $reading->id)>{{ $reading->title }}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-
             <div>
-                <label for="title">Quiz Title</label>
-                <input type="text" id="title" name="title" value="{{ old('title', $quiz->title) }}" placeholder="e.g. Assessment: Tenses and syntax patterns" required autofocus>
+                <label for="title">Exercise Title</label>
+                <input type="text" id="title" name="title" value="{{ old('title', $listeningMaterial->title) }}" placeholder="e.g. Intermediate Listening: Travel Vocabulary" required autofocus>
             </div>
 
-            <div class="grid gap-5 sm:grid-cols-3">
+            <div class="grid gap-5 sm:grid-cols-2">
                 <div>
                     <label for="difficulty">Relative Difficulty</label>
                     <select id="difficulty" name="difficulty">
-                        <option value="beginner" @selected(old('difficulty', $quiz->difficulty) === 'beginner')>Beginner</option>
-                        <option value="intermediate" @selected(old('difficulty', $quiz->difficulty) === 'intermediate')>Intermediate</option>
-                        <option value="advanced" @selected(old('difficulty', $quiz->difficulty) === 'advanced')>Advanced</option>
+                        <option value="beginner" @selected(old('difficulty', $listeningMaterial->difficulty) === 'beginner')>Beginner</option>
+                        <option value="intermediate" @selected(old('difficulty', $listeningMaterial->difficulty) === 'intermediate')>Intermediate</option>
+                        <option value="advanced" @selected(old('difficulty', $listeningMaterial->difficulty) === 'advanced')>Advanced</option>
                     </select>
                 </div>
+            </div>
+
+            <div class="border-t border-slate-50 dark:border-slate-800/60 pt-4 space-y-4">
+                <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">Audio Source Configuration</h4>
                 
-                <div>
-                    <label for="time_limit_minutes">Time Limit (Minutes)</label>
-                    <input type="number" id="time_limit_minutes" name="time_limit_minutes" value="{{ old('time_limit_minutes', $quiz->time_limit_minutes) }}" placeholder="e.g. 15">
+                <div class="rounded-xl bg-slate-50/50 p-4 border border-slate-100 dark:bg-slate-900/50 dark:border-slate-800/80 flex items-center gap-3">
+                    <svg class="h-6 w-6 text-indigo-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" /></svg>
+                    <div class="truncate">
+                        <p class="text-xs font-bold text-slate-900 dark:text-white">Active Audio Link</p>
+                        <a href="{{ $listeningMaterial->audio_url }}" target="_blank" class="text-xs text-sky-600 hover:underline truncate block max-w-xl">{{ $listeningMaterial->audio_url }}</a>
+                    </div>
                 </div>
 
-                <div>
-                    <label for="passing_score">Passing Score (%)</label>
-                    <input type="number" id="passing_score" name="passing_score" value="{{ old('passing_score', $quiz->passing_score) }}" min="0" max="100" required>
+                <div class="grid gap-5 sm:grid-cols-2">
+                    <div>
+                        <label for="audio_file">Replace Audio File (MP3/WAV/M4A)</label>
+                        <input type="file" id="audio_file" name="audio_file" accept="audio/*">
+                    </div>
+                    
+                    <div class="flex flex-col justify-end">
+                        <label for="audio_url">Replace Remote Audio URL</label>
+                        <input type="url" id="audio_url" name="audio_url" value="{{ old('audio_url', $listeningMaterial->audio_url) }}" placeholder="e.g. https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+                    </div>
                 </div>
             </div>
 
             <div class="pt-4 border-t border-slate-50 dark:border-slate-800/60 flex items-center justify-end gap-2.5">
-                <a class="btn btn-secondary" href="{{ route('admin.quizzes.index') }}">Cancel</a>
-                <button class="btn btn-primary" type="submit">Update Quiz</button>
+                <a class="btn btn-secondary" href="{{ route('admin.listening-materials.index') }}">Cancel</a>
+                <button class="btn btn-primary" type="submit">Update Exercise</button>
             </div>
         </form>
     </div>
 
-    <!-- Questions List & Addition Manager -->
+    <!-- Questions Manager -->
     <div class="card space-y-6">
         <div class="border-b border-slate-50 dark:border-slate-800/60 pb-4">
-            <h3 class="text-lg font-bold text-slate-900 dark:text-white">Manage Quiz Questions</h3>
-            <p class="text-xs text-slate-500 font-medium">Add, review, and delete assessment questions for this quiz module.</p>
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white">Manage Listening Questions</h3>
+            <p class="text-xs text-slate-500 font-medium">Add, review, and delete multiple-choice comprehension questions for this audio clip.</p>
         </div>
 
         <!-- AJAX Alert Banner -->
         <div id="ajax-alert" class="hidden w-fit items-center gap-2.5 rounded-2xl border px-4 py-2.5 text-xs font-semibold"></div>
 
         <!-- Add Question Form -->
-        <form id="add-question-form" method="POST" action="{{ route('admin.quizzes.questions.store', $quiz) }}" class="space-y-4 bg-slate-50/30 dark:bg-slate-950/40 p-5 rounded-2xl border border-slate-100 dark:border-slate-800/80">
+        <form id="add-question-form" method="POST" action="{{ route('admin.listening-materials.questions.store', $listeningMaterial) }}" class="space-y-4 bg-slate-50/30 dark:bg-slate-950/40 p-5 rounded-2xl border border-slate-100 dark:border-slate-800/80">
             @csrf
             <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">Add New Question</h4>
             
             <div>
                 <label for="question">Question Text</label>
-                <input type="text" id="question" name="question" placeholder="e.g. What is the synonym of 'resilience'?" required>
+                <input type="text" id="question" name="question" placeholder="e.g. What main topic did the speaker discuss in the beginning?" required>
             </div>
 
             <div class="grid gap-4 sm:grid-cols-2">
@@ -133,11 +124,11 @@
 
         <!-- Current Questions List -->
         <div id="questions-section" class="space-y-4">
-            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">Existing Questions (<span id="questions-count">{{ $quiz->questions->count() }}</span>)</h4>
+            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">Existing Questions (<span id="questions-count">{{ $listeningMaterial->questions->count() }}</span>)</h4>
             
-            <p id="no-questions-placeholder" class="text-xs text-slate-400 italic {{ $quiz->questions->isEmpty() ? '' : 'hidden' }}">No questions added to this quiz yet.</p>
+            <p id="no-questions-placeholder" class="text-xs text-slate-400 italic {{ $listeningMaterial->questions->isEmpty() ? '' : 'hidden' }}">No questions added to this listening exercise yet.</p>
             
-            <div id="questions-table-wrapper" class="overflow-x-auto rounded-2xl border border-slate-100 dark:border-slate-800 {{ $quiz->questions->isEmpty() ? 'hidden' : '' }}">
+            <div id="questions-table-wrapper" class="overflow-x-auto rounded-2xl border border-slate-100 dark:border-slate-800 {{ $listeningMaterial->questions->isEmpty() ? 'hidden' : '' }}">
                 <table class="w-full text-left text-xs border-collapse">
                     <thead>
                         <tr class="bg-slate-50 dark:bg-slate-900/50 text-slate-400 font-bold border-b border-slate-100 dark:border-slate-800">
@@ -149,7 +140,7 @@
                         </tr>
                     </thead>
                     <tbody id="questions-tbody" class="divide-y divide-slate-50 dark:divide-slate-800/60 font-medium">
-                        @foreach ($quiz->questions as $index => $q)
+                        @foreach ($listeningMaterial->questions as $index => $q)
                             <tr id="question-row-{{ $q->id }}" class="hover:bg-slate-50/30 dark:hover:bg-slate-800/25">
                                 <td class="p-4 font-bold text-slate-400 question-index">{{ $index + 1 }}</td>
                                 <td class="p-4 text-slate-900 dark:text-white max-w-xs truncate">{{ $q->question }}</td>
@@ -160,7 +151,7 @@
                                     <span class="badge badge-beginner">{{ $q->correct_answer }}</span>
                                 </td>
                                 <td class="p-4 text-right">
-                                    <form method="POST" action="{{ route('admin.quizzes.questions.destroy', [$quiz, $q]) }}" class="delete-question-form inline">
+                                    <form method="POST" action="{{ route('admin.listening-materials.questions.destroy', [$listeningMaterial, $q]) }}" class="delete-question-form inline">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="text-rose-500 hover:text-rose-600 hover:underline text-[11px] font-bold">
@@ -187,7 +178,7 @@
             const countBadge = document.getElementById('questions-count');
             const addBtn = document.getElementById('add-question-btn');
             
-            const quizId = "{{ $quiz->id }}";
+            const materialId = "{{ $listeningMaterial->id }}";
             const csrfToken = "{{ csrf_token() }}";
 
             // Helper to escape HTML to prevent XSS
@@ -205,7 +196,6 @@
                 alertBox.classList.remove('hidden', 'flex', 'bg-emerald-500/5', 'border-emerald-500/10', 'text-emerald-800', 'dark:text-emerald-400', 'bg-rose-500/5', 'border-rose-500/10', 'text-rose-800', 'dark:text-rose-450');
                 alertBox.innerHTML = '';
                 
-                // Add icons
                 const icon = isSuccess 
                     ? `<svg class="h-4 w-4 shrink-0 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>`
                     : `<svg class="h-4 w-4 shrink-0 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>`;
@@ -275,7 +265,7 @@
 
                         // Append row to table
                         const newRowId = `question-row-${data.question.id}`;
-                        const deleteRoute = `/admin/quizzes/${quizId}/questions/${data.question.id}`;
+                        const deleteRoute = `/admin/listening-materials/${materialId}/questions/${data.question.id}`;
                         const trHtml = `
                             <tr id="${newRowId}" class="hover:bg-slate-50/30 dark:hover:bg-slate-800/25">
                                 <td class="p-4 font-bold text-slate-400 question-index">1</td>

@@ -26,6 +26,7 @@
                     <tr>
                         <th>Title</th>
                         <th>Level</th>
+                        <th>Price</th>
                         <th>Status</th>
                         <th class="text-right">Actions</th>
                     </tr>
@@ -33,10 +34,19 @@
                 <tbody class="divide-y divide-slate-50 dark:divide-slate-800">
                     @forelse ($courses as $course)
                         <tr>
-                            <td class="font-semibold text-slate-900 dark:text-white">{{ $course->title }}</td>
+                            <td class="font-semibold text-slate-900 dark:text-white">
+                                <a href="{{ route('admin.courses.show', $course) }}" class="text-indigo-600 hover:underline dark:text-indigo-400 font-bold">
+                                    {{ $course->title }}
+                                </a>
+                            </td>
                             <td>
                                 <span class="badge badge-{{ strtolower($course->level) === 'beginner' ? 'beginner' : (strtolower($course->level) === 'intermediate' ? 'intermediate' : 'advanced') }}">
                                     {{ $course->level }}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="font-bold text-slate-700 dark:text-slate-300">
+                                    ৳{{ $course->price }}
                                 </span>
                             </td>
                             <td>
@@ -61,7 +71,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="4" class="text-center py-8 text-sm text-slate-400">
+                            <td colspan="5" class="text-center py-8 text-sm text-slate-400">
                                 No courses available. Add your first course above.
                             </td>
                         </tr>

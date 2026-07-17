@@ -26,7 +26,7 @@
                     <select id="course_id" name="course_id">
                         <option value="">No Course Associated</option>
                         @foreach ($courses as $course)
-                            <option value="{{ $course->id }}">{{ $course->title }}</option>
+                            <option value="{{ $course->id }}" @selected(old('course_id', request('course_id')) == $course->id)>{{ $course->title }}</option>
                         @endforeach
                     </select>
                 </div>

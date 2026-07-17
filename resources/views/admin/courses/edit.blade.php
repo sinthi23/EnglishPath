@@ -31,7 +31,7 @@
                 <textarea id="description" name="description" rows="4" placeholder="Briefly describe the syllabus, prerequisites, and learning outcome...">{{ old('description', $course->description) }}</textarea>
             </div>
 
-            <div class="grid gap-5 sm:grid-cols-2">
+            <div class="grid gap-5 sm:grid-cols-3">
                 <div>
                     <label for="level">Target Level</label>
                     <select id="level" name="level">
@@ -39,6 +39,11 @@
                         <option value="intermediate" @selected(old('level', $course->level) === 'intermediate')>Intermediate</option>
                         <option value="advanced" @selected(old('level', $course->level) === 'advanced')>Advanced</option>
                     </select>
+                </div>
+                
+                <div>
+                    <label for="price">Price (BDT)</label>
+                    <input type="number" id="price" name="price" value="{{ old('price', $course->price) }}" min="0" placeholder="e.g. 49" required>
                 </div>
                 
                 <div class="flex items-center pt-8">

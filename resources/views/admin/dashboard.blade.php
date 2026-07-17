@@ -6,7 +6,6 @@
 @php
     $coursesCount = \App\Models\Course::count();
     $lessonsCount = \App\Models\Lesson::count();
-    $vocabCount = \App\Models\Vocabulary::count();
     $quizzesCount = \App\Models\Quiz::count();
     $readingsCount = \App\Models\ReadingPassage::count();
     $usersCount = \App\Models\User::count();
@@ -21,7 +20,7 @@
             <div>
                 <p class="text-xs font-bold uppercase tracking-[0.25em] text-indigo-600 dark:text-indigo-400">Admin Dashboard</p>
                 <h1 class="mt-2 text-2xl font-extrabold text-slate-950 dark:text-white tracking-tight">System Statistics Overview</h1>
-                <p class="mt-2 text-sm leading-6 text-slate-500 dark:text-slate-400">Manage courses, lessons, quizzes, reading materials, vocabulary, and user authorization levels.</p>
+                <p class="mt-2 text-sm leading-6 text-slate-500 dark:text-slate-400">Manage courses, lessons, quizzes, reading materials, and user authorization levels.</p>
             </div>
             <a class="btn btn-primary px-5 py-3 text-xs" href="{{ route('admin.users.create-admin') }}">
                 <svg class="mr-1.5 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -58,17 +57,6 @@
             </div>
         </div>
 
-        <!-- Vocabulary Widget -->
-        <div class="card flex flex-col justify-between transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-[0_20px_40px_rgba(99,102,241,0.04)] dark:hover:shadow-[0_20px_40px_rgba(99,102,241,0.12)] hover:border-indigo-200/80 dark:hover:border-indigo-500/30">
-            <div>
-                <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Vocabulary Items</p>
-                <p class="mt-3 text-4xl font-extrabold text-slate-900 dark:text-white">{{ $vocabCount }}</p>
-            </div>
-            <div class="mt-4 pt-3.5 border-t border-slate-50 dark:border-slate-800 flex items-center justify-between">
-                <span class="text-xs text-slate-400">Saved definition words</span>
-                <a href="{{ route('admin.vocabularies.index') }}" class="text-xs font-bold text-indigo-600 hover:underline dark:text-indigo-400">View vocabulary →</a>
-            </div>
-        </div>
 
         <!-- Quizzes Widget -->
         <div class="card flex flex-col justify-between transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-[0_20px_40px_rgba(99,102,241,0.04)] dark:hover:shadow-[0_20px_40px_rgba(99,102,241,0.12)] hover:border-indigo-200/80 dark:hover:border-indigo-500/30">
@@ -114,13 +102,12 @@
 
     <!-- Quick action links -->
     <div class="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm dark:bg-slate-900 dark:border-slate-800/60">
-        <h3 class="text-base font-bold text-slate-950 dark:text-white mb-4">Quick Operations</h3>
+        <h3 class="text-base font-bold text-slate-955 dark:text-white mb-4">Quick Operations</h3>
         <div class="flex flex-wrap gap-2.5">
             <a href="{{ route('admin.courses.create') }}" class="btn btn-secondary text-xs px-4 py-2 hover:bg-slate-50">Create Course</a>
             <a href="{{ route('admin.lessons.create') }}" class="btn btn-secondary text-xs px-4 py-2 hover:bg-slate-50">Create Lesson</a>
             <a href="{{ route('admin.quizzes.create') }}" class="btn btn-secondary text-xs px-4 py-2 hover:bg-slate-50">Create Quiz</a>
             <a href="{{ route('admin.readings.create') }}" class="btn btn-secondary text-xs px-4 py-2 hover:bg-slate-50">Add Reading Passage</a>
-            <a href="{{ route('admin.vocabularies.create') }}" class="btn btn-secondary text-xs px-4 py-2 hover:bg-slate-50">Add Vocabulary Word</a>
         </div>
     </div>
 </div>

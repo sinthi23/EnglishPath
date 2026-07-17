@@ -7,6 +7,18 @@
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
+    <!-- Local Development Reset Link Helper -->
+    @if (session('dev_reset_link'))
+        <div class="mb-5">
+            <a href="{{ session('dev_reset_link') }}" class="inline-flex w-full items-center justify-center gap-1.5 px-4 py-3 bg-indigo-600 hover:bg-indigo-550 text-white text-xs font-bold rounded-xl transition shadow-md shadow-indigo-650/15">
+                Reset Password Now
+                <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+            </a>
+        </div>
+    @endif
+
     <form method="POST" action="{{ route('password.email') }}" class="space-y-4">
         @csrf
 
