@@ -69,7 +69,7 @@
                 </div>
             </div>
 
-            <div class="pt-4 border-t border-slate-50 dark:border-slate-850 flex items-center justify-end gap-2.5">
+            <div class="pt-4 border-t border-slate-50 dark:border-slate-800/60 flex items-center justify-end gap-2.5">
                 <a class="btn btn-secondary" href="{{ route('admin.quizzes.index') }}">Cancel</a>
                 <button class="btn btn-primary" type="submit">Update Quiz</button>
             </div>
@@ -78,13 +78,13 @@
 
     <!-- Questions List & Addition Manager -->
     <div class="card space-y-6">
-        <div class="border-b border-slate-50 dark:border-slate-850/60 pb-4">
+        <div class="border-b border-slate-50 dark:border-slate-800/60 pb-4">
             <h3 class="text-lg font-bold text-slate-900 dark:text-white">Manage Quiz Questions</h3>
             <p class="text-xs text-slate-500 font-medium">Add, review, and delete assessment questions for this quiz module.</p>
         </div>
 
         <!-- Add Question Form -->
-        <form method="POST" action="{{ route('admin.quizzes.questions.store', $quiz) }}" class="space-y-4 bg-slate-50/50 dark:bg-slate-850/20 p-5 rounded-2xl border border-slate-100 dark:border-slate-800/80">
+        <form method="POST" action="{{ route('admin.quizzes.questions.store', $quiz) }}" class="space-y-4 bg-slate-50/30 dark:bg-slate-950/40 p-5 rounded-2xl border border-slate-100 dark:border-slate-800/80">
             @csrf
             <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">Add New Question</h4>
             
@@ -138,7 +138,7 @@
                 <div class="overflow-x-auto rounded-2xl border border-slate-100 dark:border-slate-800">
                     <table class="w-full text-left text-xs border-collapse">
                         <thead>
-                            <tr class="bg-slate-50 dark:bg-slate-850/50 text-slate-400 font-bold border-b border-slate-100 dark:border-slate-800">
+                            <tr class="bg-slate-50 dark:bg-slate-900/50 text-slate-400 font-bold border-b border-slate-100 dark:border-slate-800">
                                 <th class="p-4">#</th>
                                 <th class="p-4">Question</th>
                                 <th class="p-4">Options</th>
@@ -146,9 +146,9 @@
                                 <th class="p-4 text-right">Actions</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-slate-50 dark:divide-slate-850/60 font-medium">
+                        <tbody class="divide-y divide-slate-50 dark:divide-slate-800/60 font-medium">
                             @foreach ($quiz->questions as $index => $q)
-                                <tr class="hover:bg-slate-50/30 dark:hover:bg-slate-850/20">
+                                <tr class="hover:bg-slate-50/30 dark:hover:bg-slate-800/25">
                                     <td class="p-4 font-bold text-slate-400">{{ $index + 1 }}</td>
                                     <td class="p-4 text-slate-900 dark:text-white max-w-xs truncate">{{ $q->question }}</td>
                                     <td class="p-4 text-slate-500">

@@ -68,7 +68,7 @@
                 </div>
             </div>
 
-            <div class="pt-4 border-t border-slate-50 dark:border-slate-850 flex items-center justify-end gap-2.5">
+            <div class="pt-4 border-t border-slate-50 dark:border-slate-800/60 flex items-center justify-end gap-2.5">
                 <a class="btn btn-secondary" href="{{ route('admin.quizzes.index') }}">Cancel</a>
                 <button class="btn btn-primary" type="submit">Save Quiz</button>
             </div>

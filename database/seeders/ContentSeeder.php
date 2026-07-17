@@ -75,13 +75,54 @@ class ContentSeeder extends Seeder
             ]
         );
 
-        ReadingPassage::updateOrCreate(
+        $readingPassage = ReadingPassage::updateOrCreate(
             ['slug' => 'my-first-day-at-school'],
             [
                 'title' => 'My First Day at School',
                 'difficulty' => 'beginner',
                 'passage' => 'I went to school early. I met my teacher and new friends. We said hello and learned together.',
                 'is_published' => true,
+            ]
+        );
+
+        $readingQuiz = Quiz::updateOrCreate(
+            [
+                'lesson_id' => null,
+                'reading_passage_id' => $readingPassage->id,
+                'title' => 'My First Day at School Quiz',
+            ],
+            [
+                'difficulty' => 'beginner',
+                'time_limit_minutes' => 5,
+                'passing_score' => 50,
+            ]
+        );
+
+        Question::updateOrCreate(
+            [
+                'quiz_id' => $readingQuiz->id,
+                'question' => 'When did the narrator go to school?',
+            ],
+            [
+                'option_a' => 'Late',
+                'option_b' => 'Early',
+                'option_c' => 'In the afternoon',
+                'option_d' => 'At night',
+                'correct_answer' => 'B',
+            ]
+        );
+
+        Question::updateOrCreate(
+            [
+                'quiz_id' => $readingQuiz->id,
+                'question' => 'Who did the narrator meet at school?',
+            ],
+            [
+                'option_a' => 'Only new friends',
+                'option_b' => 'Their teacher and new friends',
+                'option_c' => 'No one',
+                'option_d' => 'Their parents',
+                'correct_answer' => 'B',
             ]
         );
 
