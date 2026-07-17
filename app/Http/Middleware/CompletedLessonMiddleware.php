@@ -21,6 +21,18 @@ class CompletedLessonMiddleware
             return $next($request);
         }
 
+        if ($lesson->course_id) {
+            $course = $lesson->course;
+            if ($course && $course->price > 0) {
+                $isEnrolled = $request->user()->enrolledCourses()->where('course_id', $course->id)->exists();
+                if (!$isEnrolled) {
+                    return redirect()
+                        ->route('student.courses.show', $lesson->course_id)
+                        ->with('error', 'You must enroll in this course to access its lessons.');
+                }
+            }
+        }
+
         $previousLesson = Lesson::query()
             ->where('course_id', $lesson->course_id)
             ->where('is_published', true)

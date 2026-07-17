@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->text('description')->nullable();
+            $table->unsignedInteger('price')->default(0);
             $table->string('level')->default('beginner')->index();
             $table->boolean('is_published')->default(true)->index();
             $table->timestamps();

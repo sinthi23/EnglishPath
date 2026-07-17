@@ -7,7 +7,9 @@ use App\Models\Lesson;
 use App\Models\Question;
 use App\Models\Quiz;
 use App\Models\ReadingPassage;
+use App\Models\User;
 use App\Models\Vocabulary;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Seeder;
 
 class ContentSeeder extends Seeder
@@ -17,11 +19,33 @@ class ContentSeeder extends Seeder
      */
     public function run(): void
     {
+        // Seed default users
+        User::updateOrCreate(
+            ['email' => 'admin@example.com'],
+            [
+                'name' => 'Admin User',
+                'role' => 'admin',
+                'email_verified_at' => now(),
+                'password' => Hash::make('password'),
+            ]
+        );
+
+        User::updateOrCreate(
+            ['email' => 'student@example.com'],
+            [
+                'name' => 'Student User',
+                'role' => 'student',
+                'email_verified_at' => now(),
+                'password' => Hash::make('password'),
+            ]
+        );
+
         $course = Course::updateOrCreate(
             ['slug' => 'general-english-foundations'],
             [
                 'title' => 'General English Foundations',
                 'description' => 'Starter lessons for grammar, vocabulary, and reading practice.',
+                'price' => 49,
                 'level' => 'beginner',
                 'is_published' => true,
             ]

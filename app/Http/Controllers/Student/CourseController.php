@@ -55,6 +55,47 @@ class CourseController extends Controller
             $lesson->score = $progress?->score;
         }
 
-        return view('student.courses.show', compact('course', 'lessons'));
+        $isEnrolled = $course->price > 0 
+            ? $user->enrolledCourses()->where('course_id', $course->id)->exists() 
+            : true;
+
+        return view('student.courses.show', compact('course', 'lessons', 'isEnrolled'));
+    }
+
+    public function checkout(Request $request, Course $course)
+    {
+        abort_unless($course->is_published, 404);
+        abort_unless($course->price > 0, 404);
+
+        $user = $request->user();
+        $isEnrolled = $user->enrolledCourses()->where('course_id', $course->id)->exists();
+        if ($isEnrolled) {
+            return redirect()->route('student.courses.show', $course);
+        }
+
+        return view('student.courses.checkout', compact('course'));
+    }
+
+    public function enroll(Request $request, Course $course)
+    {
+        abort_unless($course->is_published, 404);
+
+        $user = $request->user();
+
+        if ($course->price > 0) {
+            $request->validate([
+                'payment_method' => 'required|in:card,bkash',
+                'transaction_id' => 'required|string|min:6',
+            ], [
+                'transaction_id.required' => 'Please provide the transaction ID (TxID) for verification.',
+                'transaction_id.min' => 'Transaction ID must be at least 6 characters.',
+            ]);
+        }
+
+        $user->enrolledCourses()->syncWithoutDetaching([$course->id]);
+
+        return redirect()
+            ->route('student.courses.show', $course)
+            ->with('success', 'You have successfully enrolled in ' . $course->title . '!');
     }
 }

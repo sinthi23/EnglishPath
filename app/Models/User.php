@@ -51,6 +51,19 @@ class User extends Authenticatable
         return $this->hasMany(ListeningAttempt::class);
     }
 
+    public function enrolledCourses()
+    {
+        return $this->belongsToMany(Course::class, 'enrollments');
+    }
+
+    public function sendPasswordResetNotification($token): void
+    {
+        $resetUrl = route('password.reset', ['token' => $token, 'email' => $this->email]);
+        session()->flash('dev_reset_link', $resetUrl);
+
+        $this->notify(new \Illuminate\Auth\Notifications\ResetPassword($token));
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *
