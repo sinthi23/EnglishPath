@@ -42,18 +42,19 @@
                         Logged in as: <span class="font-semibold text-sky-300">{{ auth()->user()->email }}</span>
                     </p>
                 </div>
-                <nav class="flex flex-wrap gap-1.5 text-xs font-semibold">
-                    <a href="{{ route('admin.dashboard') }}" class="rounded-full px-4 py-2.5 transition {{ request()->routeIs('admin.dashboard') ? 'bg-sky-500 text-white shadow-md shadow-sky-500/20' : 'bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white' }}">Dashboard</a>
-                    <a href="{{ route('admin.courses.index') }}" class="rounded-full px-4 py-2.5 transition {{ request()->routeIs('admin.courses.*') ? 'bg-sky-500 text-white shadow-md shadow-sky-500/20' : 'bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white' }}">Courses</a>
-                    <a href="{{ route('admin.lessons.index') }}" class="rounded-full px-4 py-2.5 transition {{ request()->routeIs('admin.lessons.*') ? 'bg-sky-500 text-white shadow-md shadow-sky-500/20' : 'bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white' }}">Lessons</a>
-                    <a href="{{ route('admin.quizzes.index') }}" class="rounded-full px-4 py-2.5 transition {{ request()->routeIs('admin.quizzes.*') ? 'bg-sky-500 text-white shadow-md shadow-sky-500/20' : 'bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white' }}">Quizzes</a>
-                    <a href="{{ route('admin.readings.index') }}" class="rounded-full px-4 py-2.5 transition {{ request()->routeIs('admin.readings.*') ? 'bg-sky-500 text-white shadow-md shadow-sky-500/20' : 'bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white' }}">Reading</a>
-                    <a href="{{ route('admin.writing-topics.index') }}" class="rounded-full px-4 py-2.5 transition {{ request()->routeIs('admin.writing-topics.*') ? 'bg-sky-500 text-white shadow-md shadow-sky-500/20' : 'bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white' }}">Writing</a>
-                    <a href="{{ route('admin.listening-materials.index') }}" class="rounded-full px-4 py-2.5 transition {{ request()->routeIs('admin.listening-materials.*') ? 'bg-sky-500 text-white shadow-md shadow-sky-500/20' : 'bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white' }}">Listening</a>
-                    <a href="{{ route('admin.users.index') }}" class="rounded-full px-4 py-2.5 transition {{ request()->routeIs('admin.users.*') ? 'bg-sky-500 text-white shadow-md shadow-sky-500/20' : 'bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white' }}">Users</a>
-                    <form method="POST" action="{{ route('logout') }}" class="inline-flex">
+                <nav class="flex flex-wrap gap-1 text-xs font-semibold">
+                    <a href="{{ route('admin.dashboard') }}" class="rounded-full px-3 py-2 transition {{ request()->routeIs('admin.dashboard') ? 'bg-sky-500 text-white shadow-md shadow-sky-500/20' : 'bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white' }}">Dashboard</a>
+                    <a href="{{ route('admin.courses.index') }}" class="rounded-full px-3 py-2 transition {{ request()->routeIs('admin.courses.*') ? 'bg-sky-500 text-white shadow-md shadow-sky-500/20' : 'bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white' }}">Courses</a>
+                    <a href="{{ route('admin.lessons.index') }}" class="rounded-full px-3 py-2 transition {{ request()->routeIs('admin.lessons.*') ? 'bg-sky-500 text-white shadow-md shadow-sky-500/20' : 'bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white' }}">Lessons</a>
+                    <a href="{{ route('admin.quizzes.index') }}" class="rounded-full px-3 py-2 transition {{ request()->routeIs('admin.quizzes.*') ? 'bg-sky-500 text-white shadow-md shadow-sky-500/20' : 'bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white' }}">Quizzes</a>
+                    <a href="{{ route('admin.readings.index') }}" class="rounded-full px-3 py-2 transition {{ request()->routeIs('admin.readings.*') ? 'bg-sky-500 text-white shadow-md shadow-sky-500/20' : 'bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white' }}">Reading</a>
+                    <a href="{{ route('admin.writing-topics.index') }}" class="rounded-full px-3 py-2 transition {{ request()->routeIs('admin.writing-topics.*') ? 'bg-sky-500 text-white shadow-md shadow-sky-500/20' : 'bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white' }}">Writing</a>
+                    <a href="{{ route('admin.listening-materials.index') }}" class="rounded-full px-3 py-2 transition {{ request()->routeIs('admin.listening-materials.*') ? 'bg-sky-500 text-white shadow-md shadow-sky-500/20' : 'bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white' }}">Listening</a>
+                    <a href="{{ route('admin.enrollments.index') }}" class="rounded-full px-3 py-2 transition {{ request()->routeIs('admin.enrollments.*') ? 'bg-sky-500 text-white shadow-md shadow-sky-500/20' : 'bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white' }}">Enrollments</a>
+                    <a href="{{ route('admin.users.index') }}" class="rounded-full px-3 py-2 transition {{ request()->routeIs('admin.users.*') ? 'bg-sky-500 text-white shadow-md shadow-sky-500/20' : 'bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white' }}">Users</a>
+                    <form method="POST" action="{{ route('logout') }}" class="inline-block">
                         @csrf
-                        <button type="submit" class="rounded-full bg-white/5 px-4 py-2.5 text-slate-300 font-semibold transition hover:bg-rose-500/20 hover:text-rose-200 hover:border-rose-500/20">Logout</button>
+                        <button type="submit" class="rounded-full bg-white/5 px-3 py-2 text-slate-300 font-semibold transition hover:bg-rose-500/20 hover:text-rose-200 hover:border-rose-500/20">Logout</button>
                     </form>
                 </nav>
             </div>

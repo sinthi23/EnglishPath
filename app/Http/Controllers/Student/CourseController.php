@@ -55,11 +55,15 @@ class CourseController extends Controller
             $lesson->score = $progress?->score;
         }
 
+        $enrollment = \App\Models\Enrollment::where('user_id', $user->id)
+            ->where('course_id', $course->id)
+            ->first();
+
         $isEnrolled = $course->price > 0 
-            ? $user->enrolledCourses()->where('course_id', $course->id)->exists() 
+            ? ($enrollment && $enrollment->status === 'approved') 
             : true;
 
-        return view('student.courses.show', compact('course', 'lessons', 'isEnrolled'));
+        return view('student.courses.show', compact('course', 'lessons', 'isEnrolled', 'enrollment'));
     }
 
     public function checkout(Request $request, Course $course)
@@ -68,8 +72,12 @@ class CourseController extends Controller
         abort_unless($course->price > 0, 404);
 
         $user = $request->user();
-        $isEnrolled = $user->enrolledCourses()->where('course_id', $course->id)->exists();
-        if ($isEnrolled) {
+        
+        $enrollment = \App\Models\Enrollment::where('user_id', $user->id)
+            ->where('course_id', $course->id)
+            ->first();
+
+        if ($enrollment && in_array($enrollment->status, ['pending', 'approved'])) {
             return redirect()->route('student.courses.show', $course);
         }
 
@@ -90,9 +98,33 @@ class CourseController extends Controller
                 'transaction_id.required' => 'Please provide the transaction ID (TxID) for verification.',
                 'transaction_id.min' => 'Transaction ID must be at least 6 characters.',
             ]);
+
+            \App\Models\Enrollment::updateOrCreate(
+                [
+                    'user_id' => $user->id,
+                    'course_id' => $course->id,
+                ],
+                [
+                    'status' => 'pending',
+                    'payment_method' => $request->input('payment_method'),
+                    'transaction_id' => $request->input('transaction_id'),
+                ]
+            );
+
+            return redirect()
+                ->route('student.courses.show', $course)
+                ->with('success', 'Your enrollment request has been submitted and is pending admin approval.');
         }
 
-        $user->enrolledCourses()->syncWithoutDetaching([$course->id]);
+        \App\Models\Enrollment::updateOrCreate(
+            [
+                'user_id' => $user->id,
+                'course_id' => $course->id,
+            ],
+            [
+                'status' => 'approved',
+            ]
+        );
 
         return redirect()
             ->route('student.courses.show', $course)

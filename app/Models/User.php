@@ -53,7 +53,9 @@ class User extends Authenticatable
 
     public function enrolledCourses()
     {
-        return $this->belongsToMany(Course::class, 'enrollments');
+        return $this->belongsToMany(Course::class, 'enrollments')
+            ->wherePivot('status', 'approved')
+            ->withPivot('status', 'transaction_id', 'payment_method');
     }
 
     public function sendPasswordResetNotification($token): void
