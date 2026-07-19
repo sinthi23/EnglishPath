@@ -262,7 +262,18 @@ class StudentCoursesTest extends TestCase
         $this->assertDatabaseHas('enrollments', [
             'user_id' => $user->id,
             'course_id' => $course->id,
+            'status' => 'pending',
         ]);
+
+        // Verify that access to lesson is blocked (302 redirect) while pending
+        $blockedResponse = $this->actingAs($user)->get(route('student.lessons.show', $lesson));
+        $blockedResponse->assertStatus(302);
+
+        // Approve the enrollment (simulated admin action)
+        \App\Models\Enrollment::where([
+            'user_id' => $user->id,
+            'course_id' => $course->id,
+        ])->update(['status' => 'approved']);
 
         $lessonResponse = $this->actingAs($user)->get(route('student.lessons.show', $lesson));
         $lessonResponse->assertStatus(200);

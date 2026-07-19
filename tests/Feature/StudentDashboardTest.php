@@ -99,7 +99,7 @@ test('student dashboard shows learning metrics', function () {
     $response = $this->actingAs($user)->get(route('student.dashboard'));
 
     $response->assertOk();
-    $response->assertSee('Lessons completed');
+    $response->assertSee('Lessons Finished');
     $response->assertSee('Vocabulary learned');
     $response->assertSee('Bookmarks');
     $response->assertSee('Recent Quiz');

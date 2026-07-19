@@ -69,7 +69,7 @@
 					</p>
 				</div>
 				<div class="rounded-3xl border border-slate-100 bg-slate-50/50 p-6 dark:bg-slate-800/20 dark:border-slate-800">
-					<p class="text-xs font-bold uppercase tracking-wider text-slate-400">Last Visited Date</p>
+					<p class="text-xs font-bold uppercase tracking-wider text-slate-400">Completion Date</p>
 					<p class="mt-2 text-2xl font-extrabold text-slate-800 dark:text-white">
 						{{ $latestProgress?->completed_at?->format('M d, Y') ?? 'Not completed yet' }}
 					</p>

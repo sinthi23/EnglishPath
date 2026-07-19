@@ -19,6 +19,7 @@ use App\Http\Controllers\Student\ListeningController;
 use App\Http\Controllers\PreferencesController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\VocabularyController;
+use App\Http\Controllers\Admin\EnrollmentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -71,6 +72,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin', 'no.back.hi
     Route::resource('listening-materials', ListeningMaterialController::class)->except(['show']);
     Route::post('listening-materials/{listeningMaterial}/questions', [ListeningMaterialController::class, 'storeQuestion'])->name('listening-materials.questions.store');
     Route::delete('listening-materials/{listeningMaterial}/questions/{listeningQuestion}', [ListeningMaterialController::class, 'destroyQuestion'])->name('listening-materials.questions.destroy');
+    
+    // Enrollment verification and management
+    Route::get('enrollments', [EnrollmentController::class, 'index'])->name('enrollments.index');
+    Route::post('enrollments/{enrollment}/approve', [EnrollmentController::class, 'approve'])->name('enrollments.approve');
+    Route::post('enrollments/{enrollment}/reject', [EnrollmentController::class, 'reject'])->name('enrollments.reject');
 });
 
 Route::prefix('student')->name('student.')->middleware(['auth', 'student', 'no.back.history'])->group(function () {

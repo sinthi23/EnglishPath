@@ -31,7 +31,41 @@
             @endif
 
             <!-- Paid Course Enrollment Card -->
-            @if (!$isEnrolled)
+            @if ($enrollment && $enrollment->status === 'pending')
+                <div class="overflow-hidden rounded-[2rem] border border-amber-500/20 bg-gradient-to-br from-slate-900 via-amber-950/20 to-slate-955 p-8 text-center text-white shadow-xl max-w-2xl mx-auto my-8">
+                    <div class="inline-flex items-center rounded-full border border-amber-400/20 bg-amber-500/10 px-3.5 py-1 text-[10px] font-bold uppercase tracking-wider text-amber-300 mb-4 animate-pulse">
+                        Enrollment Pending Verification
+                    </div>
+                    <h3 class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-white to-amber-100 bg-clip-text text-transparent mb-2">
+                        Verification in Progress
+                    </h3>
+                    <p class="text-xs text-slate-350 max-w-md mx-auto leading-relaxed mb-6">
+                        Your enrollment request for "{{ $course->title }}" is currently under review by our team. We are verifying your transaction.
+                    </p>
+                    <div class="bg-slate-950/40 rounded-xl p-4 max-w-sm mx-auto text-left text-xs border border-white/5 space-y-2 font-medium">
+                        <div class="flex justify-between"><span class="text-slate-400">Payment Method:</span> <span class="text-white capitalize">{{ $enrollment->payment_method }}</span></div>
+                        <div class="flex justify-between"><span class="text-slate-400">Transaction ID:</span> <span class="text-white font-mono">{{ $enrollment->transaction_id }}</span></div>
+                        <div class="flex justify-between"><span class="text-slate-400">Submitted at:</span> <span class="text-white">{{ $enrollment->created_at ? $enrollment->created_at->format('M d, Y H:i') : 'N/A' }}</span></div>
+                    </div>
+                </div>
+            @elseif ($enrollment && $enrollment->status === 'rejected')
+                <div class="overflow-hidden rounded-[2rem] border border-rose-500/20 bg-gradient-to-br from-slate-900 via-rose-950/20 to-slate-955 p-8 text-center text-white shadow-xl max-w-2xl mx-auto my-8">
+                    <div class="inline-flex items-center rounded-full border border-rose-400/20 bg-rose-500/10 px-3.5 py-1 text-[10px] font-bold uppercase tracking-wider text-rose-350 mb-4">
+                        Enrollment Request Rejected
+                    </div>
+                    <h3 class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-white to-rose-100 bg-clip-text text-transparent mb-2">
+                        Request Declined
+                    </h3>
+                    <p class="text-xs text-slate-300 max-w-md mx-auto leading-relaxed mb-6">
+                        Your previous enrollment request was rejected. This usually happens due to an invalid Transaction ID. Please check the details and try again.
+                    </p>
+                    <div class="max-w-xs mx-auto">
+                        <a href="{{ route('student.courses.checkout', $course) }}" class="btn btn-primary w-full py-3.5 text-xs tracking-wider uppercase font-bold shadow-lg shadow-indigo-650/20 transition-all duration-300 hover:scale-[1.02]">
+                            Submit New Request (৳{{ number_format($course->price) }} BDT)
+                        </a>
+                    </div>
+                </div>
+            @elseif (!$isEnrolled)
                 <div class="overflow-hidden rounded-[2rem] border border-indigo-500/20 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-955 p-8 text-center text-white shadow-xl max-w-2xl mx-auto my-8">
                     <div class="inline-flex items-center rounded-full border border-indigo-400/20 bg-indigo-500/10 px-3.5 py-1 text-[10px] font-bold uppercase tracking-wider text-indigo-300 mb-4">
                         Premium Course

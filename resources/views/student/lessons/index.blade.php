@@ -1,8 +1,8 @@
-@extends('layouts.app')
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="text-xl font-extrabold tracking-tight text-slate-900 dark:text-white">Free Lessons</h2>
+    </x-slot>
 
-@section('title', 'Free Lessons')
-
-@section('content')
 <div class="space-y-8">
     <!-- Header banner -->
     <div class="relative overflow-hidden rounded-[2.5rem] bg-slate-900 px-8 py-10 shadow-lg dark:bg-slate-950">
@@ -77,4 +77,4 @@
         @endif
     </div>
 </div>
-@endsection
+</x-app-layout>
